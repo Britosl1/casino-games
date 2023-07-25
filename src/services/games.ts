@@ -1,7 +1,5 @@
 const apiUrl = "https://api-casino.recois.com/slots/list";
 
-type Sort = "a-z" | "z-a" | "release";
-
 interface GetGamesResponse {
   sort_by?: string;
   search?: string;

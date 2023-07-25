@@ -4,39 +4,43 @@ import { getGames } from "./services/games";
 import { IGamesProps } from "./interfaces/gameInterfaces";
 
 import "./App.css";
+import Carousel from "./components/Carousel";
 
 function App() {
   const [gameData, setGameData] = useState<IGamesProps[]>([]);
-  // const [caroselNumber, setCaroselNumber] = useState<number>(6);
+  const [caroselNumber, setCaroselNumber] = useState<number>(6);
 
   const fetchGames = useCallback(async () => {
     try {
-      const data = await getGames({});
+      const data = await getGames({ sort_by: "a-z", num: caroselNumber });
       setGameData(data.result.games);
     } catch (error) {
       console.log(error);
     }
-  }, []);
-
-  console.log(gameData);
+  }, [caroselNumber]);
 
   useEffect(() => {
     fetchGames();
-  }, [fetchGames]);
+  }, [fetchGames, caroselNumber]);
 
-  console.log(gameData);
+  console.log(caroselNumber);
 
   return (
     <div className="home-container">
-      {/* {gameData.splice(0, 6).map((game: IGamesProps) => ( */}
-      {gameData.splice(0, 6).map((game: IGamesProps) => (
-        <GameCard
-          name={game.name}
-          icon={game.icon}
-          url={game.url}
-          key={game.id}
-        />
-      ))}
+      <Carousel
+        disabled={gameData.length === 6}
+        onScrollLeft={() => setCaroselNumber((prevPage) => prevPage - 6)}
+        onScrollRight={() => setCaroselNumber((prevPage) => prevPage + 6)}
+      >
+        {gameData.map((game: IGamesProps) => (
+          <GameCard
+            name={game.name}
+            icon={game.icon}
+            url={game.url}
+            key={game.id}
+          />
+        ))}
+      </Carousel>
     </div>
   );
 }
