@@ -1,7 +1,7 @@
 import "./styles.css";
 
 interface ICarouselProps {
-  children: React.ReactNode[];
+  children: React.ReactNode[] | React.ReactNode;
   onScrollLeft: () => void;
   onScrollRight: () => void;
   disabled: boolean;

@@ -6,12 +6,14 @@ import { IGamesProps } from "./interfaces/gameInterfaces";
 import "./App.css";
 import Carousel from "./components/Carousel";
 import { Inputs } from "./components/Inputs";
+import Loading from "./components/Loading";
 
 function App() {
   const [gameData, setGameData] = useState<IGamesProps[]>([]);
   const [caroselNumber, setCaroselNumber] = useState<number>(6);
-  const [selectedSortBy, setSelectedSortBy] = useState("a-z");
-  const [selectedSearch, setSelectedSearch] = useState("");
+  const [selectedSortBy, setSelectedSortBy] = useState<string>("a-z");
+  const [selectedSearch, setSelectedSearch] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
 
   const fetchGames = useCallback(async () => {
     try {
@@ -23,6 +25,8 @@ function App() {
       setGameData(data.result.games);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false)
     }
   }, [caroselNumber, selectedSortBy, selectedSearch]);
 
@@ -57,7 +61,9 @@ function App() {
         onScrollLeft={scrollLeft}
         onScrollRight={scrollRight}
       >
-        {gameData.map((game: IGamesProps) => (
+        {loading ? <Loading /> :
+        
+        gameData.map((game: IGamesProps) => (
           <GameCard
             name={game.name}
             icon={game.icon}
@@ -65,6 +71,7 @@ function App() {
             key={game.id}
           />
         ))}
+        
       </Carousel>
     </div>
   );
