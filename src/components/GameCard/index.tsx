@@ -1,21 +1,13 @@
-import { useEffect, useState } from "react";
-import { getGames } from "../../services/games";
+import "./styles.css";
 
-export default function GameCard() {
-  const [gameData, setGameData] = useState([]);
-  const fetchGames = async () => {
-    try {
-      const data = await getGames();
-      setGameData(data.result.games);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+import { IGamesProps } from "../../interfaces/gameInterfaces";
 
-  console.log(gameData);
+type IGameCardProps = Pick<IGamesProps, "name" | "url" | "icon">;
 
-  useEffect(() => {
-    fetchGames();
-  }, []);
-  return <div className="gameCardContainer">GAME CARD</div>;
+export default function GameCard({ icon, url, name }: IGameCardProps) {
+  return (
+    <a className="game-card-container" href={url}>
+      <img src={icon} alt={name} />
+    </a>
+  );
 }

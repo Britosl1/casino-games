@@ -1,0 +1,13 @@
+.game-card-container {
+  margin: 10px;
+}
+
+.game-card-container img {
+  max-width: 160px;
+  border-radius: 10px;
+  transition: ease-in-out 0.3s;
+}
+
+.game-card-container img:hover {
+  transform: translate(3px, -3px);
+}
