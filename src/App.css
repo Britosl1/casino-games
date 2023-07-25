@@ -3,4 +3,10 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+  flex-direction: column;
+}
+
+.inputs-container {
+  display: flex;
+  margin-bottom: 40px;
 }

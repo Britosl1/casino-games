@@ -3,8 +3,8 @@
   flex-wrap: nowrap;
   justify-content: center;
   overflow: hidden;
-
   transition: 1s all;
+  max-width: 1100px;
 }
 
 .buttons-slider-container {
@@ -12,7 +12,6 @@
   justify-content: center;
   gap: 60px;
   position: relative;
-  /* margin-top: 20px; */
 }
 
 .button-abled-right {
@@ -31,6 +30,7 @@
   right: 0;
   height: 200px;
   z-index: 999;
+  transition: 0.2s all;
 }
 
 .button-abled-left {
@@ -49,6 +49,7 @@
   left: 0;
   height: 200px;
   z-index: 999;
+  transition: 0.2s all;
 }
 
 .buttons-slider-container-disabled {
@@ -63,12 +64,15 @@
   font-size: 20px;
   font-weight: 700;
   cursor: auto;
-  right: left;
+  position: fixed;
+  left: 0;
   height: 200px;
   z-index: 999;
+  transition: 0.2s all;
 }
 
-.button-abled:hover {
+.button-abled-right:hover,
+.button-abled-left:hover {
   background: #fff;
   color: navy;
   border: 1px solid navy;
