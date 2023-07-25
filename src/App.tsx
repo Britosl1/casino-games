@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import GameCard from "./components/GameCard";
 import { getGames } from "./services/games";
 import { IGamesProps } from "./interfaces/gameInterfaces";
@@ -11,18 +11,20 @@ function App() {
   const [gameData, setGameData] = useState<IGamesProps[]>([]);
   const [caroselNumber, setCaroselNumber] = useState<number>(6);
   const [selectedSortBy, setSelectedSortBy] = useState("a-z");
+  const [selectedSearch, setSelectedSearch] = useState("");
 
   const fetchGames = useCallback(async () => {
     try {
       const data = await getGames({
         sort_by: selectedSortBy,
         num: caroselNumber,
+        search: selectedSearch,
       });
       setGameData(data.result.games);
     } catch (error) {
       console.log(error);
     }
-  }, [caroselNumber, selectedSortBy]);
+  }, [caroselNumber, selectedSortBy, selectedSearch]);
 
   const scrollLeft = () => {
     setCaroselNumber((prevPage) => prevPage - 6);
@@ -36,8 +38,7 @@ function App() {
     fetchGames();
   }, [fetchGames, caroselNumber]);
 
-  console.log(caroselNumber);
-  console.log(selectedSortBy);
+  console.log(selectedSearch);
 
   return (
     <div className="home-container">
@@ -45,6 +46,10 @@ function App() {
         <Inputs.SortInput
           onChange={(e) => setSelectedSortBy(e.target.value)}
           value={selectedSortBy}
+        />
+        <Inputs.SearchInput
+          onChange={(e) => setSelectedSearch(e.target.value)}
+          value={selectedSearch}
         />
       </div>
       <Carousel
